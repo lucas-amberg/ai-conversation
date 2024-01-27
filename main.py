@@ -50,19 +50,25 @@ def main():
     
     start_time = time.time()
     
-    print(f"\tAI 1 {int(time.time() - start_time)}: {ai_1_response_1}\n")
+    print(f"AI 1 {int(time.time() - start_time)}: {ai_1_response_1}\n") # Prints the initial message
+    
     for i in range(int(limit)): # Runs for the limit specified earlier
       time.sleep(2)
       ai_2_message = get_message_from_ai2(ai_2_properties.age, ai_2_properties.gender, ai_2_messages)
-      print('\n---------------------------------------------------------------------------------------\n')
-      ai_2_messages.append({'role': 'assistant', 'content': ai_2_message})
-      ai_1_messages.append({'role': 'user', 'content': ai_2_message})
-      print(f"\tAI 2 {int(time.time() - start_time)}: {ai_2_message}\n")
+
+      ai_2_messages.append({'role': 'assistant', 'content': ai_2_message}) # Add AI 2 message to its own memory
+      ai_1_messages.append({'role': 'user', 'content': ai_2_message}) # Add AI 2 message to AI 1's memory
+
+      print(f"AI 2 {int(time.time() - start_time)}: {ai_2_message}") # Outputs AI 2 Message to console
+
+      print('\n---------------------------------------------------------------------------------------\n') # Divides each message for better readability
       time.sleep(2)
       ai_1_message = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, ai_1_messages)
-      ai_2_messages.append({'role': 'user', 'content': ai_1_message})
-      ai_1_messages.append({'role': 'assistant', 'content': ai_1_message})
-      print(f"\tAI 1 {int(time.time() - start_time)}: {ai_1_message}\n")
+
+      ai_2_messages.append({'role': 'user', 'content': ai_1_message}) # Add AI 1 message to AI 2's memory
+      ai_1_messages.append({'role': 'assistant', 'content': ai_1_message}) # Add AI 1 message to its own memory
+
+      print(f"AI 1 {int(time.time() - start_time)}: {ai_1_message}\n") # Outputs AI 1 Message to console
 
     print('\n====================================================\n')
     print(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.')
