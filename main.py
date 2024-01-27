@@ -27,8 +27,8 @@ def main():
     print('Initializing AI...')
     print('\n====================================================\n')
     print('Initial prompt: ' + prompt1+'\n')
-    print(f'AI 1 Details:\n\tAge: {ai_1_properties.age}\n\tGender: {ai_1_properties.gender}')
-    print(f'AI 2 Details:\n\tAge: {ai_2_properties.age}\n\tGender: {ai_2_properties.gender}')
+    print(f'AI 1 Details:\n\tAge: {ai_1_properties.age}\n\tGender: {ai_1_properties.gender}\n\tName: {ai_1_properties.name}')
+    print(f'AI 2 Details:\n\tAge: {ai_2_properties.age}\n\tGender: {ai_2_properties.gender}\n\tName: {ai_2_properties.name}')
     print('Message Limit: ' + limit)
     print('\n====================================================\n')
     print('Initializing conversation...')
@@ -38,29 +38,34 @@ def main():
 
     # These are the initial message arrays for the AI, as it runs it will append to this array, this way the AI retains its memory of the conversation
     ai_1_messages = [
-      {"role": "system", "content": "You are a human living on Earth and you will have to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_1_properties.age) +  " years old and you are a " + str(ai_1_properties.gender) +". Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person."}, 
-      {"role": "user", "content": str(prompt1)},
+      {"role": "system", "content": "You are a human living named " + ai_1_properties.name + ", living on Earth and you will have to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_1_properties.age) +  " years old and you are a " + str(ai_1_properties.gender) +". Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring!"}, 
+      {"role": "system", "content": str(prompt1)},
+      {"role": "assistant", "content": str(ai_1_response_1)}
       ]
     ai_2_messages = [
-      {"role": "system", "content": "You are a human living on Earth designed to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_2_properties.age) +  " years old and you are a " + str(ai_2_properties.gender) +"Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person."}, 
+      {"role": "system", "content": "You are a human living named " + ai_2_properties.name + ", living on Earth designed to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_2_properties.age) +  " years old and you are a " + str(ai_2_properties.gender) +"Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring!"}, 
+      {"role": "system", "content": str(prompt1)},
       {"role": "user", "content": str(ai_1_response_1)},
       ]
     
     start_time = time.time()
     
-    print(f"\tAI 1 {time.time() - start_time}: {ai_1_response_1}\n")
-    time.sleep(2)
+    print(f"\tAI 1 {int(time.time() - start_time)}: {ai_1_response_1}\n")
     for i in range(int(limit)): # Runs for the limit specified earlier
-      ai_2_message = get_message_from_ai2(ai_2_properties.age, ai_2_properties.gender, ai_2_messages)
-      ai_1_messages.append({'role': 'user', 'content': ai_2_message})
-      print(f"\tAI 2 {time.time() - start_time}: {ai_2_message}\n")
       time.sleep(2)
-      ai_1_message = get_message_from_ai1(ai_2_properties.age, ai_2_properties.gender, ai_1_messages)
+      ai_2_message = get_message_from_ai2(ai_2_properties.age, ai_2_properties.gender, ai_2_messages)
+      print('\n---------------------------------------------------------------------------------------\n')
+      ai_2_messages.append({'role': 'assistant', 'content': ai_2_message})
+      ai_1_messages.append({'role': 'user', 'content': ai_2_message})
+      print(f"\tAI 2 {int(time.time() - start_time)}: {ai_2_message}\n")
+      time.sleep(2)
+      ai_1_message = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, ai_1_messages)
       ai_2_messages.append({'role': 'user', 'content': ai_1_message})
-      print(f"\tAI 1{time.time() - start_time}: {ai_1_message}\n")
+      ai_1_messages.append({'role': 'assistant', 'content': ai_1_message})
+      print(f"\tAI 1 {int(time.time() - start_time)}: {ai_1_message}\n")
 
     print('\n====================================================\n')
-    print(f'{int(limit) + 1} messages sent in {time.time() - start_time} seconds.')
+    print(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.')
 
 
 def get_message_from_ai1(age, gender, messages):
@@ -84,13 +89,17 @@ def get_ai_properties():
     def __init__(self) : # Sets age and gender for the class
       self.age = random.randint(18,82)
       self.gender = self.get_gender()
+      self.name = self.get_name()
     
     def get_gender(self): # Sets a random gender for the class
       rand_number = random.randint(1,2)
       if rand_number == 1:
-        return 'Male'
+        return 'male'
       else:
-        return 'Female'
+        return 'female'
+    
+    def get_name(self):
+      return names.get_first_name(gender=self.gender)
     
   new_ai = AI_Information()
   return new_ai
