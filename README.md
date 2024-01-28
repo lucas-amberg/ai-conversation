@@ -13,5 +13,16 @@ AI Chatbot made using OpenAI API and Python to simulate a real interaction betwe
 * Add more than 2 AI agents
 
 ## Examples
-**Celebrity Mode:**
-![Tupac and Eminem having a conversation](./logs/preview-images/eminem-tupac-example.jpg)
+### Celebrity Mode:
+***Eminem AI and Tupac AI having a conversation:***
+![Tupac and Eminem having a conversation](./logs/preview-images/eminem-tupac-example.png)\
+\
+\
+***Spongebob AI and Patrick AI having a conversation:***
+![Spongebob and Patrick having a conversation](./logs/preview-images/spongebob-patrick-example.png)
+
+
+
+### Non Celebrity Mode:
+***Benjamin, 23, talks to Dorothy, 37***
+![Benjamin and Dorothy having a conversation](./logs/preview-images/random-character-example.png)\\
