@@ -15,8 +15,10 @@ root.title('AI Conversation')
 mainframe = tk.Frame(root, background='white')
 mainframe.pack(fill='both', expand=True)
 
-def main(OPENAI_API_KEY):
-  openai.api_key = OPENAI_API_KEY  # Initializes AI
+API_KEY = None
+
+def main():
+  openai.api_key = API_KEY  # Initializes AI
 
   
   
@@ -217,36 +219,52 @@ def get_openai_key():
   text = ttk.Label(mainframe, text='Please select an option to use an OpenAI API Key', background='white', font=('Brass Mono', 17), justify='center')
   text.grid(row=0, column=0)
   text.place(relx=.5, rely=.4, anchor="c")
-  print('Please select an option to use an OpenAI API Key:')
-  print('\n\t[0] - Get API Key from Environment Variable')
-  print('\t[1] - Input API Key\n')
-  user_selection = -1
+  env_button = ttk.Button(mainframe, text='Get From Environment Variable', padding=20, width=20, command=get_from_env)
+  input_button = ttk.Button(mainframe, text='Input Key', padding=20, width=20, command=get_from_input)
+  env_button.place(relx=.3, rely=.6, anchor='c')
+  input_button.place(relx=.7, rely=.6, anchor='c')
 
-  while user_selection not in ['0','1']: # Checks to see if input is valid
-    user_selection = input('> ')
-    if user_selection not in ['0','1']:
-      print('Invalid Input')
-    print('\n')
+    
 
-  if user_selection == '0':
-    return os.environ.get('OPENAI_API_KEY', None) # Attempts to pull the key from environment variables
+# Gets the environment variable
+def get_from_env():
+  clear_mainframe()
+  API_KEY = os.environ.get('OPENAI_API_KEY', None)
+  print(API_KEY)
+
+# Gets the API key from input
+def get_from_input():
+  clear_mainframe()
+  text = ttk.Label(mainframe, text='Please input your OpenAI API Key', background='white', font=('Brass Mono', 17), justify='center')
+  text.grid(row=0, column=0)
+  text.place(relx=.5, rely=.4, anchor="c")
+  input_box = ttk.Entry(mainframe, width=70)
+  input_box.place(relx=.5, rely=.5, anchor='c')
+  input_button = ttk.Button(mainframe, width=20, padding=20, text='Submit Key', command=lambda: validate_key(input_box))
+  input_button.place(relx=.5, rely=.65, anchor='c')
+
+def validate_key(input_box):
+  key_from_box = input_box.get()
+  match = re.search(r"^sk-[a-zA-Z0-9]{32,}$", key_from_box)
+  invalid_input = ttk.Label(mainframe, text='Your Input Was Invalid, Please Try Again', background='white', foreground='red', font=('Brass Mono', 12), justify='center')
+  invalid_input.place(relx=.5, rely=.8, anchor='c')
+  invalid_input.grid_remove()
+  if not match:
+    invalid_input.pack()
+  else:
+    API_KEY = key_from_box
+    clear_mainframe()
+
   
-  if user_selection == '1':
-    match = None
-    while not match:
-      user_key_input = input('Input your OpenAI API Key\n\n> ')
-      match = re.search(r"^sk-[a-zA-Z0-9]{32,}$", user_key_input) # Compares inputted key with regex to see if it is valid
-      if not match:
-        print('Invalid key format, please try again\n')
-      else:
-        print('Key input successful.')
-        return user_key_input # Returns the key if format is correct
-
+# Clears the mainframe
+def clear_mainframe():
+  for widget in mainframe.winfo_children():
+    widget.destroy() # Clears the frame
 
 if __name__ == '__main__':
-  OPENAI_API_KEY = get_openai_key()
-  if OPENAI_API_KEY != None:
-    main(OPENAI_API_KEY)
+  get_openai_key()
+  if API_KEY != None:
+    main()
   else:
-    print('No key was found in your environment variables.')
+    text=ttk.Label(mainframe, text='No API Key Was Found In Your ENV Variables', background='white', foreground='red', font=('Brass Mono', 12), justify='center')
   root.mainloop()
