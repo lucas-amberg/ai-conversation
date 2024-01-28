@@ -1,0 +1,39 @@
+Initializing AI...
+====================================================
+Initial prompt (Spongebob Squarepants -> Donald Trump): Bahahhaha! Lets play Rock Paper Scissors! Winner gets free Krabby Patties! Bahahhahah!
+AI 1 Details:
+	Name: Donald Trump
+AI 2 Details:
+	Name: Spongebob Squarepants
+Celebrity Mode: Enabled
+Message Limit: 7
+====================================================
+Initializing conversation...
+====================================================
+Donald Trump (AI 1) (0:0): I don't have time for childish games. I'm focused on making America great again.
+Spongebob Squarepants (AI 2) (3:1): Oh, Donald Trump, you're such a silly goose! Playing games is fun and can make America great too! Let's give it a try, come on, one round of Rock Paper Scissors! Bahahahah!
+---------------------------------------------------------------------------------------
+Donald Trump (AI 1) (7:1): I'm sorry, but I don't have time for trivial games. My focus is on leading this great nation and making tough decisions.
+Spongebob Squarepants (AI 2) (11:2): Oh, Donald Trump, you're such a silly goose! Playing games is important for decision-making too! It helps keep the mind sharp and the spirit high! C'mon, just one round of Rock Paper Scissors, pretty please? Bahahahah!
+---------------------------------------------------------------------------------------
+Donald Trump (AI 1) (14:2): I'm sorry, but I am not interested in playing games. I have important matters to attend to.
+Spongebob Squarepants (AI 2) (19:3): Oh, Donald Trump, you're such a funny duck! But no worries, I understand you're a busy bee. If you ever change your mind, I'll be here ready for some Rock Paper Scissors fun! Bahahahah!
+---------------------------------------------------------------------------------------
+Donald Trump (AI 1) (22:3): Thank you for understanding. However, I highly doubt I will change my mind. Now, if you'll excuse me, I have more pressing matters to attend to.
+Spongebob Squarepants (AI 2) (26:4): Oh, Donald Trump, you're such a busy bee! No worries at all, I'll just keep playing Rock Paper Scissors by myself. Bahahahah! Have a great day, Mr. President!
+---------------------------------------------------------------------------------------
+Donald Trump (AI 1) (29:4): Thank you, and have a tremendous day as well. Remember, America is winning!
+Spongebob Squarepants (AI 2) (33:5): Oh, Donald Trump, you're such a positive pineapple! America is always winning with you around! Have a tremendous day too, and keep up the great work! Bahahahah!
+---------------------------------------------------------------------------------------
+Suddenly... a random force makes Donald Trump want to talk about something else...
+---------------------------------------------------------------------------------------
+Donald Trump (AI 1) (36:5): Let's talk about something other than games. What's on your mind?
+Spongebob Squarepants (AI 2) (40:6): Oh, I'm always thinking about jellyfishing, Krusty Krab adventures, and making people smile! What's on your mind, my friend? Bahahahah!
+---------------------------------------------------------------------------------------
+Donald Trump (AI 1) (44:6): As the President, my mind is constantly occupied with matters of national importance and making decisions that will benefit the American people. I'm focused on issues like the economy, national security, and international relations.
+Spongebob Squarepants (AI 2) (48:7): Oh, Donald Trump, you're such a serious starfish! But don't forget to have some fun along the way too! Maybe we can talk about jellyfishing strategies for national security? Bahahahah!
+---------------------------------------------------------------------------------------
+Donald Trump (AI 1) (52:7): Jellyfishing strategies for national security? That's not something I would consider a priority. National security requires careful planning and coordination, not whimsical ideas about jellyfishing. Let's focus on more relevant topics, shall we?
+
+====================================================
+8 messages sent in 52 seconds.

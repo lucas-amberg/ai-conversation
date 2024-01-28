@@ -6,7 +6,7 @@ AI Chatbot made using OpenAI API and Python to simulate a real interaction betwe
   * A full conversation only costs a few cents
 * User can set a limit to the conversation so it won't run forever
 * Make AI agents into historical figures or celebrities so their conversation can be simulated
-* Conversations are saved in a txt file in the `./logs/` directory
+* Conversations are saved in a txt file in the `/logs/` directory
 
 ## Future Features
 * Set the name and age of AI agents at will
