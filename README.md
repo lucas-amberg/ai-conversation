@@ -11,3 +11,7 @@ AI Chatbot made using OpenAI API and Python to simulate a real interaction betwe
 ## Future Features
 * Set the name and age of AI agents at will
 * Add more than 2 AI agents
+
+## Examples
+**Celebrity Mode:**
+![Tupac and Eminem having a conversation](./logs/preview-images/eminem-tupac-example.jpg)
