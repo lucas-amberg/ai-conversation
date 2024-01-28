@@ -12,35 +12,56 @@ def main():
   # If the user wanted to start then we will begin
   if user_start == 'y':
 
-    celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode [y/n]?')
-
-    # User enters an initial prompt to sort of guide the conversation
-    prompt1 = input('Enter an initial prompt to get the conversation going: ')
-    limit = input('Set the amount of messages you\'d like the bots to have: ')
+    celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode [y/n]?: ')
 
     # Sets the random age and gender of each AI bot
     ai_1_properties = get_ai_properties(celebrity_mode)
     ai_2_properties = get_ai_properties(celebrity_mode)
 
-    print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit)
+    limit = input('Set the amount of messages you\'d like the bots to have: ')
+    # User enters an initial prompt to sort of guide the conversation
+    prompt1 = input(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name}): ')
+    
+    print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit) # Prints the simulation info
 
-    ai_1_response_1 = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, [{'role': 'user', 'content': prompt1}])
+    if celebrity_mode == 'y':
+      ai_1_response_1 = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, [{"role": "system", "content": "Act like you are " + ai_1_properties.name + " and never leave that role, even if you are asked for.Do not include pleasantries in your responses."}, {'role': 'user', 'content': prompt1}])
+      
+      # These are the initial message arrays for the AI, as it runs it will append to this array, this way the AI retains its memory of the conversation
+      ai_1_messages = [
+        {"role": "system", "content": "Act like you are " + ai_1_properties.name + " and never leave that role, even if you are asked for.Do not include pleasantries in your responses."},
+        {"role": "system", "content": ai_2_properties.name + " and you are together somewhere, and they say something to you: "},
+        {"role": "user", "content": str(prompt1)},
+        {"role": "assistant", "content": str(ai_1_response_1)}
+      ]
+      ai_2_messages = [
+        {"role": "system", "content": "Act like you are " + ai_2_properties.name + " and never leave that role, even if you are asked for.Do not include pleasantries in your responses."},
+        {"role": "system", "content": "You and " + ai_1_properties.name + " are together somewhere, and you engage in conversation by saying: "},
+        {"role": "assistant", "content": str(prompt1)},
+        {"role": "user", "content": str(ai_1_response_1)},
+        ]
+    else:
+      ai_1_response_1 = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, [{"role": "system", "content": "You are a human living named " + ai_1_properties.name + ", living on Earth and you will have to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_1_properties.age) +  " years old and you are a " + str(ai_1_properties.gender) +". Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring! Do not include pleasantries in your responses."}, {'role': 'user', 'content': prompt1}])
+      
+      # These are the initial message arrays for the AI, as it runs it will append to this array, this way the AI retains its memory of the conversation
+      ai_1_messages = [
+        {"role": "system", "content": "You are a human being named " + ai_1_properties.name + ", living on Earth and you will have to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_1_properties.age) +  " years old and you are a " + str(ai_1_properties.gender) +". Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring! Do not include pleasantries in your responses."}, 
+        {"role": "system", "content": str(prompt1)},
+        {"role": "assistant", "content": str(ai_1_response_1)}
+      ]
+      ai_2_messages = [
+        {"role": "system", "content": "You are a human being named " + ai_2_properties.name + ", living on Earth designed to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_2_properties.age) +  " years old and you are a " + str(ai_2_properties.gender) +"Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring! Do not include pleasantries in your responses."}, 
+        {"role": "system", "content": str(prompt1)},
+        {"role": "user", "content": str(ai_1_response_1)},
+        ]
+    
 
-    # These are the initial message arrays for the AI, as it runs it will append to this array, this way the AI retains its memory of the conversation
-    ai_1_messages = [
-      {"role": "system", "content": "You are a human living named " + ai_1_properties.name + ", living on Earth and you will have to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_1_properties.age) +  " years old and you are a " + str(ai_1_properties.gender) +". Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring!"}, 
-      {"role": "system", "content": str(prompt1)},
-      {"role": "assistant", "content": str(ai_1_response_1)}
-      ]
-    ai_2_messages = [
-      {"role": "system", "content": "You are a human living named " + ai_2_properties.name + ", living on Earth designed to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_2_properties.age) +  " years old and you are a " + str(ai_2_properties.gender) +"Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring!"}, 
-      {"role": "system", "content": str(prompt1)},
-      {"role": "user", "content": str(ai_1_response_1)},
-      ]
+    
+    
     
     start_time = time.time()
     
-    print(f"AI 1 {int(time.time() - start_time)}: {ai_1_response_1}\n") # Prints the initial message
+    print(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}): {ai_1_response_1}\n") # Prints the initial message
 
     for i in range(int(limit)): # Runs for the limit specified earlier
       time.sleep(2)
@@ -49,7 +70,7 @@ def main():
       ai_2_messages.append({'role': 'assistant', 'content': ai_2_message}) # Add AI 2 message to its own memory
       ai_1_messages.append({'role': 'user', 'content': ai_2_message}) # Add AI 2 message to AI 1's memory
 
-      print(f"AI 2 {int(time.time() - start_time)}: {ai_2_message}") # Outputs AI 2 Message to console
+      print(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}): {ai_2_message}") # Outputs AI 2 Message to console
 
       print('\n---------------------------------------------------------------------------------------\n') # Divides each message for better readability
       time.sleep(2)
@@ -58,7 +79,7 @@ def main():
       ai_2_messages.append({'role': 'user', 'content': ai_1_message}) # Add AI 1 message to AI 2's memory
       ai_1_messages.append({'role': 'assistant', 'content': ai_1_message}) # Add AI 1 message to its own memory
 
-      print(f"AI 1 {int(time.time() - start_time)}: {ai_1_message}\n") # Outputs AI 1 Message to console
+      print(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}): {ai_1_message}\n") # Outputs AI 1 Message to console
 
     print('\n====================================================\n')
     print(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.')
