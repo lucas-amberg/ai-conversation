@@ -22,17 +22,7 @@ def main():
     ai_1_properties = get_ai_properties(celebrity_mode)
     ai_2_properties = get_ai_properties(celebrity_mode)
 
-    # Outputs the name and age of each bot
-    time.sleep(1)
-    print('Initializing AI...')
-    print('\n====================================================\n')
-    print('Initial prompt: ' + prompt1+'\n')
-    print(f'AI 1 Details:\n\tAge: {ai_1_properties.age}\n\tGender: {ai_1_properties.gender}\n\tName: {ai_1_properties.name}')
-    print(f'AI 2 Details:\n\tAge: {ai_2_properties.age}\n\tGender: {ai_2_properties.gender}\n\tName: {ai_2_properties.name}')
-    print('\nMessage Limit: ' + limit)
-    print('\n====================================================\n')
-    print('Initializing conversation...')
-    print('\n====================================================\n')
+    print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit)
 
     ai_1_response_1 = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, [{'role': 'user', 'content': prompt1}])
 
@@ -100,11 +90,9 @@ def get_ai_properties(celebrity_mode):
       self.name = self.get_name(celebrity_mode)
     
     def get_gender(self): # Sets a random gender for the class
-      rand_number = random.randint(1,3)
+      rand_number = random.randint(1,2)
       if rand_number == 1:
         return 'male'
-      elif rand_number == 2:
-        return 'transgender'
       else:
         return 'female'
     
@@ -113,7 +101,7 @@ def get_ai_properties(celebrity_mode):
         return input('Enter the name of the person you would like the AI agent to become: ')
       return names.get_first_name(gender=self.gender)
     
-  new_ai = AI_Information()
+  new_ai = AI_Information(celebrity_mode)
   return new_ai
 
 # The purpose of this function is to ask the user whether or not they'd like
@@ -123,6 +111,26 @@ def prompt_yes_no(prompt):
   while result.lower() not in ['y', 'n']:
     result = input(prompt)
   return result.lower()
+
+# The purpose of this function is to print the info about the simulation to the console
+def print_simulation_info(celebrity_mode, ai_1, ai_2, prompt1, limit):
+  time.sleep(1)
+  print('Initializing AI...')
+  print('\n====================================================\n')
+  print('Initial prompt: ' + prompt1 +'\n')
+  if (celebrity_mode != 'y'):
+    # Outputs the name and age of each bot
+    print(f'AI 1 Details:\n\tAge: {ai_1.age}\n\tGender: {ai_1.gender}\n\tName: {ai_1.name}')
+    print(f'AI 2 Details:\n\tAge: {ai_2.age}\n\tGender: {ai_2.gender}\n\tName: {ai_2.name}')
+  else:
+    print(f'AI 1 Details:\n\tName: {ai_1.name}')
+    print(f'AI 2 Details:\n\tName: {ai_2.name}')
+  
+  print('\nMessage Limit: ' + limit)
+  print('\n====================================================\n')
+  print('Initializing conversation...')
+  print('\n====================================================\n')
+
 
 
 if __name__ == '__main__' and OPENAI_API_KEY:
