@@ -22,9 +22,11 @@ def main():
   print('ran main')
 
   # celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode [y/n]?: ')
-  celebrity_mode = ask_for_celeb()
+  celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode?', 17)
+  print('celeb mode main ', celebrity_mode)
 
-  random_changes = prompt_yes_no('Would you like random changes to take place in the coversation (makes the conversation more meaningful) [y/n]?: ')
+  random_changes = prompt_yes_no('Would you like random changes to take place in the coversation?', 14)
+  print('random main ', random_changes)
 
   # Sets the random age and gender of each AI bot
   ai_1_properties = get_ai_properties(celebrity_mode)
@@ -131,20 +133,20 @@ def main():
   print_and_write(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.', log_file)
 
 # Asks the user if they want to use Celebrity Mode
-def ask_for_celeb():
-  print('ran')
-  text = ttk.Label(mainframe, text='Would you like to use Celebrity Mode?', background='white', font=('Brass Mono', 17), justify='center')
+def prompt_yes_no(prompt, font_size):
+  text = ttk.Label(mainframe, text=prompt, background='white', font=('Brass Mono', font_size), justify='center')
   text.place(relx=.5, rely=.4, anchor="c")
-  celeb_mode = tk.StringVar(value='n')
-  celeb_button_clicked = tk.StringVar()
-  radio_button_yes = ttk.Radiobutton(mainframe, text='Yes', variable=celeb_mode, value='y')
-  radio_button_no = ttk.Radiobutton(mainframe, text='No', variable=celeb_mode, value='n')
+  answer = tk.StringVar(value='y')
+  answer_button_clicked = tk.StringVar()
+  radio_button_yes = ttk.Radiobutton(mainframe, text='Yes', variable=answer, value='y')
+  radio_button_no = ttk.Radiobutton(mainframe, text='No', variable=answer, value='n')
   radio_button_yes.place(relx=.4, rely=.55, anchor="c")
   radio_button_no.place(relx=.6, rely=.55, anchor="c")
-  submit_celeb = ttk.Button(mainframe, text='Submit Choice', command=lambda: celeb_button_clicked.set('clicked'))
-  submit_celeb.place(relx=.5, rely=.7, anchor="c")
-  submit_celeb.wait_variable(celeb_button_clicked)
-  return celeb_mode.get()
+  submit_yes_no = ttk.Button(mainframe, text='Submit Choice', command=lambda: answer_button_clicked.set('clicked'))
+  submit_yes_no.place(relx=.5, rely=.7, anchor="c")
+  submit_yes_no.wait_variable(answer_button_clicked)
+  clear_mainframe()
+  return answer.get()
 
   
   
@@ -189,13 +191,13 @@ def get_ai_properties(celebrity_mode):
   new_ai = AI_Information(celebrity_mode)
   return new_ai
 
-# The purpose of this function is to ask the user whether or not they'd like
-# to do a task and checks to see if the input is valid
-def prompt_yes_no(prompt):
-  result = input(prompt) # Prompts the user whether or not they would like to start the simulation
-  while result.lower() not in ['y', 'n']:
-    result = input(prompt)
-  return result.lower()
+# # The purpose of this function is to ask the user whether or not they'd like
+# # to do a task and checks to see if the input is valid
+# def prompt_yes_no(prompt):
+#   result = input(prompt) # Prompts the user whether or not they would like to start the simulation
+#   while result.lower() not in ['y', 'n']:
+#     result = input(prompt)
+#   return result.lower()
 
 # The purpose of this function is to print the info about the simulation to the console
 def print_simulation_info(celebrity_mode, ai_1, ai_2, prompt1, limit, log_file):
