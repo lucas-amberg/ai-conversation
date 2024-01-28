@@ -3,12 +3,25 @@ import openai
 import random
 import time
 import names
-import re
+import re 
 
+import tkinter as tk
+from tkinter import ttk
 
+root = tk.Tk() # Initialize tkinter window
+root.geometry('600x400')
+root.attributes('-topmost',1)
+root.title('AI Conversation')
+mainframe = tk.Frame(root, background='white')
+mainframe.pack(fill='both', expand=True)
 
 def main(OPENAI_API_KEY):
   openai.api_key = OPENAI_API_KEY  # Initializes AI
+
+  
+  
+  
+
   user_start = prompt_yes_no('Would you like to run the simulation [y/n]?: ')
   # If the user wanted to start then we will begin
   if user_start == 'y':
@@ -121,6 +134,7 @@ def main(OPENAI_API_KEY):
 
     print_and_write('\n====================================================\n', log_file)
     print_and_write(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.', log_file)
+    
 
 
 def get_message_from_ai1(messages):
@@ -200,6 +214,9 @@ def print_and_write(text, log_file):
 # This function will get the OpenAI API Key from the user or it will
 # Get it from the env variables
 def get_openai_key():
+  text = ttk.Label(mainframe, text='Please select an option to use an OpenAI API Key', background='white', font=('Brass Mono', 17), justify='center')
+  text.grid(row=0, column=0)
+  text.place(relx=.5, rely=.4, anchor="c")
   print('Please select an option to use an OpenAI API Key:')
   print('\n\t[0] - Get API Key from Environment Variable')
   print('\t[1] - Input API Key\n')
@@ -224,7 +241,6 @@ def get_openai_key():
       else:
         print('Key input successful.')
         return user_key_input # Returns the key if format is correct
-      
 
 
 if __name__ == '__main__':
@@ -233,3 +249,4 @@ if __name__ == '__main__':
     main(OPENAI_API_KEY)
   else:
     print('No key was found in your environment variables.')
+  root.mainloop()
