@@ -12,6 +12,8 @@ def main():
   # If the user wanted to start then we will begin
   if user_start == 'y':
 
+    
+
     celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode [y/n]?: ')
 
     # Sets the random age and gender of each AI bot
@@ -22,6 +24,10 @@ def main():
     # User enters an initial prompt to sort of guide the conversation
     prompt1 = input(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name}): ')
     
+    log_file = open(f'./logs/{ai_1_properties.name}_and_{ai_2_properties.name}_{time.time()}_conversation-log.txt', 'x')
+
+    log_file.write('Hello')
+
     print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit) # Prints the simulation info
 
     if celebrity_mode == 'y':
