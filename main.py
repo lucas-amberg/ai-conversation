@@ -32,6 +32,9 @@ def main():
   ai_1_properties = get_ai_properties(celebrity_mode)
   ai_2_properties = get_ai_properties(celebrity_mode)
 
+  print('ai1 ', ai_1_properties.name)
+  print('ai2 ', ai_2_properties.name)
+
   limit = input('Set the amount of messages you\'d like the bots to have: ')
   # User enters an initial prompt to sort of guide the conversation
   prompt1 = input(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name}): ')
@@ -148,7 +151,18 @@ def prompt_yes_no(prompt, font_size):
   clear_mainframe()
   return answer.get()
 
-  
+def get_text(prompt, font_size):
+  text = ttk.Label(mainframe, text=prompt, background='white', font=('Brass Mono', font_size), justify='center')
+  text.place(relx=.5, rely=.4, anchor="c")
+  answer_button_clicked = tk.StringVar()
+  text_input = ttk.Entry(mainframe, width=70)
+  text_input.place(relx=.5, rely=.6, anchor="c")
+  submit_input = ttk.Button(mainframe, text='Submit Choice', command=lambda: answer_button_clicked.set('clicked'))
+  submit_input.place(relx=.5, rely=.7, anchor="c")
+  submit_input.wait_variable(answer_button_clicked)
+  result = text_input.get()
+  clear_mainframe()
+  return result
   
 
 def get_message_from_ai1(messages):
@@ -185,7 +199,7 @@ def get_ai_properties(celebrity_mode):
     
     def get_name(self, celebrity_mode):
       if celebrity_mode == 'y':
-        return input('Enter the name of the person you would like the AI agent to become: ')
+        return get_text('Enter the name of the person you would like the AI agent to become: ', 13)
       return names.get_first_name(gender=self.gender)
     
   new_ai = AI_Information(celebrity_mode)
