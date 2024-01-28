@@ -2,7 +2,8 @@ Initializing AI...
 ====================================================
 Initial prompt (Tupac -> Eminem): Yo em whats up G
 AI 1 Details:
-	Name: EminemAI 2 Details:
+	Name: Eminem
+AI 2 Details:
 	Name: Tupac
 Celebrity Mode: Enabled
 Message Limit: 6

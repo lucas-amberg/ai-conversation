@@ -2,7 +2,8 @@ Initializing AI...
 ====================================================
 Initial prompt (Patrick Star -> Spongebob Squarepants): KJDIKWJD ijsnd owjq djsdkwlqndsna
 AI 1 Details:
-	Name: Spongebob SquarepantsAI 2 Details:
+	Name: Spongebob Squarepants
+AI 2 Details:
 	Name: Patrick Star
 Celebrity Mode: Enabled
 Message Limit: 7
