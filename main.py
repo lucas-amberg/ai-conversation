@@ -29,7 +29,7 @@ def main():
     print('Initial prompt: ' + prompt1+'\n')
     print(f'AI 1 Details:\n\tAge: {ai_1_properties.age}\n\tGender: {ai_1_properties.gender}\n\tName: {ai_1_properties.name}')
     print(f'AI 2 Details:\n\tAge: {ai_2_properties.age}\n\tGender: {ai_2_properties.gender}\n\tName: {ai_2_properties.name}')
-    print('Message Limit: ' + limit)
+    print('\nMessage Limit: ' + limit)
     print('\n====================================================\n')
     print('Initializing conversation...')
     print('\n====================================================\n')
@@ -51,7 +51,7 @@ def main():
     start_time = time.time()
     
     print(f"AI 1 {int(time.time() - start_time)}: {ai_1_response_1}\n") # Prints the initial message
-    
+
     for i in range(int(limit)): # Runs for the limit specified earlier
       time.sleep(2)
       ai_2_message = get_message_from_ai2(ai_2_properties.age, ai_2_properties.gender, ai_2_messages)
