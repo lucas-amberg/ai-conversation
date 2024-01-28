@@ -8,12 +8,12 @@ OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', None)
 
 def main():
   openai.api_key = OPENAI_API_KEY  # Initializes AI
-  user_start = input('Would you like to run the simulation [y/n]?: ') # Prompts the user whether or not they would like to start the simulation
-  while user_start.lower() not in ['y', 'n']:
-    user_start = input('Would you like to run the simulation [y/n]?: ')
-
+  user_start = prompt_yes_no('Would you like to run the simulation [y/n]?: ')
   # If the user wanted to start then we will begin
   if user_start.lower() == 'y':
+
+    celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode [y/n]?')
+
     # User enters an initial prompt to sort of guide the conversation
     prompt1 = input('Enter an initial prompt to get the conversation going: ')
     limit = input('Set the amount of messages you\'d like the bots to have: ')
@@ -109,6 +109,15 @@ def get_ai_properties():
     
   new_ai = AI_Information()
   return new_ai
+
+# The purpose of this function is to ask the user whether or not they'd like
+# to do a task and checks to see if the input is valid
+def prompt_yes_no(prompt):
+  result = input(prompt) # Prompts the user whether or not they would like to start the simulation
+  while result.lower() not in ['y', 'n']:
+    result = input(prompt)
+  return result
+
 
 if __name__ == '__main__' and OPENAI_API_KEY:
   main()
