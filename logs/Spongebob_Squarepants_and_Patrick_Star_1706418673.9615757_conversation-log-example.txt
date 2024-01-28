@@ -1,0 +1,38 @@
+Initializing AI...
+====================================================
+Initial prompt (Patrick Star -> Spongebob Squarepants): KJDIKWJD ijsnd owjq djsdkwlqndsna
+AI 1 Details:
+	Name: Spongebob SquarepantsAI 2 Details:
+	Name: Patrick Star
+Celebrity Mode: Enabled
+Message Limit: 7
+====================================================
+Initializing conversation...
+====================================================
+Spongebob Squarepants (AI 1) (0:0): Oh, jellyfishing is so much fun! I love chasing those wiggly little creatures! But be careful, they can sting if you're not careful!
+Patrick Star (AI 2) (2:1): Jellyfish, jellyfish, jellyfish! They're all wiggly and stingy!
+---------------------------------------------------------------------------------------
+Spongebob Squarepants (AI 1) (7:1): I couldn't agree more, Patrick! Jellyfish are like underwater aliens with their wiggly tentacles and stingy ways. But hey, let's not forget the fun we have when we go jellyfishing together! It's like an adventure under the sea!
+Patrick Star (AI 2) (10:2): Jellyfishing, adventure, wiggly aliens! Under the sea, woohoo!
+---------------------------------------------------------------------------------------
+Spongebob Squarepants (AI 1) (14:2): Exactly, Patrick! Woohoo! We'll dive into the depths of the ocean, armed with our trusty nets, ready to catch those wiggly jellyfish and have the most epic underwater adventure ever! Nothing can stop us when we're jellyfishing buddies!
+Patrick Star (AI 2) (17:3): Jellyfishing buddies, epic adventure! Dive deep, catch wiggly jellyfish! Nothing stops us, woohoo!
+---------------------------------------------------------------------------------------
+Spongebob Squarepants (AI 1) (22:3): That's the spirit, Patrick! Together, we'll conquer the jellyfish-filled depths of the sea, capturing those wiggly critters with our jellyfishing expertise. No obstacle will stand in our way! Woohoo! Let's make this jellyfishing adventure the best one yet!
+Patrick Star (AI 2) (25:4): Jellyfishing conquerors, wiggly critters, no obstacles! Best adventure ever, woohoo! Jellyfishing power, activate!
+---------------------------------------------------------------------------------------
+Spongebob Squarepants (AI 1) (30:4): Jellyfishing power, activate! With our jellyfishing prowess and unstoppable determination, we'll conquer any obstacle that comes our way! Wiggly critters, beware, for SpongeBob and Patrick are here to catch you! This will be the best jellyfishing adventure ever! Woohoo!
+Patrick Star (AI 2) (33:5): Jellyfishing power, unstoppable duo! Wiggly critters beware, we're coming for you! Best adventure ever, woohoo! SpongeBob and Patrick, jellyfishing masters!
+---------------------------------------------------------------------------------------
+Spongebob Squarepants (AI 1) (38:5): That's right, Patrick! Together, we are an unstoppable duo of jellyfishing masters! No wiggly critter can escape our grasp! With our jellyfishing power, we'll make this adventure the most memorable one yet! Woohoo! SpongeBob and Patrick, the dynamic jellyfishing duo, ready to conquer the sea!
+Patrick Star (AI 2) (42:6): Unstoppable duo, jellyfishing masters! No escape for wiggly critters! Memorable adventure, woohoo! SpongeBob and Patrick, conquering the sea with jellyfishing power!
+---------------------------------------------------------------------------------------
+Suddenly... a random force makes Spongebob Squarepants want to talk about something else...
+---------------------------------------------------------------------------------------
+Spongebob Squarepants (AI 1) (46:6): Oh, sorry, sorry! I got a little carried away there. So, Patrick, what other exciting things should we do today? Maybe we can go for a bike ride or have a jellyfish-themed picnic! The possibilities are endless when we're together!
+Patrick Star (AI 2) (49:7): Bike ride, jellyfish-themed picnic, endless possibilities! Exciting day with Patrick, woohoo! Let's do it all, SpongeBob! Jellyfishing adventure continues!
+---------------------------------------------------------------------------------------
+Spongebob Squarepants (AI 1) (54:7): Absolutely, Patrick! We'll have an action-packed day full of bike riding, jellyfish-themed picnics, and whatever other exciting activities we can think of! The jellyfishing adventure never ends when we're together! Woohoo! Let's make this day one for the Bikini Bottom history books!
+Patrick Star (AI 2) (55:7): Action-packed day, bike riding, jellyfish-themed picnics! Non-stop adventure with Patrick, woohoo! Bikini Bottom history books, here we come! Jellyfishing legends, SpongeBob and Patrick!
+====================================================
+8 messages sent in 55 seconds.
