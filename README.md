@@ -26,3 +26,5 @@ AI Chatbot made using OpenAI API and Python to simulate a real interaction betwe
 ### Non Celebrity Mode:
 ***Benjamin, 23, talks to Dorothy, 37***
 ![Benjamin and Dorothy having a conversation](./logs/preview-images/random-character-example.png)\\
+
+*More examples can be found in the `/logs` folder*
