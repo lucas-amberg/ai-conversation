@@ -10,7 +10,7 @@ def main():
   openai.api_key = OPENAI_API_KEY  # Initializes AI
   user_start = prompt_yes_no('Would you like to run the simulation [y/n]?: ')
   # If the user wanted to start then we will begin
-  if user_start.lower() == 'y':
+  if user_start == 'y':
 
     celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode [y/n]?')
 
@@ -19,8 +19,8 @@ def main():
     limit = input('Set the amount of messages you\'d like the bots to have: ')
 
     # Sets the random age and gender of each AI bot
-    ai_1_properties = get_ai_properties()
-    ai_2_properties = get_ai_properties()
+    ai_1_properties = get_ai_properties(celebrity_mode)
+    ai_2_properties = get_ai_properties(celebrity_mode)
 
     # Outputs the name and age of each bot
     time.sleep(1)
@@ -77,7 +77,8 @@ def main():
 def get_message_from_ai1(age, gender, messages):
   response = openai.chat.completions.create(
     model = 'gpt-3.5-turbo',
-    messages=messages
+    messages=messages,
+    temperature=0.6
     )
   
   return response.choices[0].message.content.strip()
@@ -85,26 +86,31 @@ def get_message_from_ai1(age, gender, messages):
 def get_message_from_ai2(age, gender, messages):
   response = openai.chat.completions.create(
     model = 'gpt-3.5-turbo',
-    messages=messages
+    messages=messages,
+    temperature=0.6
     )
   
   return response.choices[0].message.content.strip()
 
-def get_ai_properties():
+def get_ai_properties(celebrity_mode):
   class AI_Information():
-    def __init__(self) : # Sets age and gender for the class
+    def __init__(self, celebrity_mode) : # Sets age and gender for the class
       self.age = random.randint(18,82)
       self.gender = self.get_gender()
-      self.name = self.get_name()
+      self.name = self.get_name(celebrity_mode)
     
     def get_gender(self): # Sets a random gender for the class
-      rand_number = random.randint(1,2)
+      rand_number = random.randint(1,3)
       if rand_number == 1:
         return 'male'
+      elif rand_number == 2:
+        return 'transgender'
       else:
         return 'female'
     
-    def get_name(self):
+    def get_name(self, celebrity_mode):
+      if celebrity_mode == 'y':
+        return input('Enter the name of the person you would like the AI agent to become: ')
       return names.get_first_name(gender=self.gender)
     
   new_ai = AI_Information()
@@ -116,7 +122,7 @@ def prompt_yes_no(prompt):
   result = input(prompt) # Prompts the user whether or not they would like to start the simulation
   while result.lower() not in ['y', 'n']:
     result = input(prompt)
-  return result
+  return result.lower()
 
 
 if __name__ == '__main__' and OPENAI_API_KEY:
