@@ -3,10 +3,11 @@ import openai
 import random
 import time
 import names
+import re
 
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', None)
 
-def main():
+
+def main(OPENAI_API_KEY):
   openai.api_key = OPENAI_API_KEY  # Initializes AI
   user_start = prompt_yes_no('Would you like to run the simulation [y/n]?: ')
   # If the user wanted to start then we will begin
@@ -196,7 +197,39 @@ def print_and_write(text, log_file):
   print(text)
   log_file.write(text)
 
+# This function will get the OpenAI API Key from the user or it will
+# Get it from the env variables
+def get_openai_key():
+  print('Please select an option to use an OpenAI API Key:')
+  print('\n\t[0] - Get API Key from Environment Variable')
+  print('\t[1] - Input API Key\n')
+  user_selection = -1
+
+  while user_selection not in ['0','1']: # Checks to see if input is valid
+    user_selection = input('> ')
+    if user_selection not in ['0','1']:
+      print('Invalid Input')
+    print('\n')
+
+  if user_selection == '0':
+    return os.environ.get('OPENAI_API_KEY', None) # Attempts to pull the key from environment variables
+  
+  if user_selection == '1':
+    match = None
+    while not match:
+      user_key_input = input('Input your OpenAI API Key\n\n> ')
+      match = re.search(r"^sk-[a-zA-Z0-9]{32,}$", user_key_input) # Compares inputted key with regex to see if it is valid
+      if not match:
+        print('Invalid key format, please try again\n')
+      else:
+        print('Key input successful.')
+        return user_key_input # Returns the key if format is correct
+      
 
 
-if __name__ == '__main__' and OPENAI_API_KEY:
-  main()
+if __name__ == '__main__':
+  OPENAI_API_KEY = get_openai_key()
+  if OPENAI_API_KEY != None:
+    main(OPENAI_API_KEY)
+  else:
+    print('No key was found in your environment variables.')
