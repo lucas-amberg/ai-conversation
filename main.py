@@ -24,11 +24,9 @@ def main():
     # User enters an initial prompt to sort of guide the conversation
     prompt1 = input(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name}): ')
     
-    log_file = open(f'./logs/{ai_1_properties.name}_and_{ai_2_properties.name}_{time.time()}_conversation-log.txt', 'x')
+    log_file = open(f'./logs/{ai_1_properties.name.replace(' ','_')}_and_{ai_2_properties.name.replace(' ','_')}_{time.time()}_conversation-log.txt', 'x')
 
-    log_file.write('Hello')
-
-    print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit) # Prints the simulation info
+    print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit, log_file) # Prints the simulation info
 
     if celebrity_mode == 'y':
       ai_1_response_1 = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, [{"role": "system", "content": "Act like you are " + ai_1_properties.name + " and never leave that role, even if you are asked for.Do not include pleasantries in your responses."}, {'role': 'user', 'content': prompt1}])
@@ -60,14 +58,10 @@ def main():
         {"role": "system", "content": str(prompt1)},
         {"role": "user", "content": str(ai_1_response_1)},
         ]
-    
-
-    
-    
-    
+  
     start_time = time.time()
     
-    print(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}): {ai_1_response_1}\n") # Prints the initial message
+    print_and_write(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}): {ai_1_response_1}\n", log_file) # Prints the initial message
 
     for i in range(int(limit)): # Runs for the limit specified earlier
       time.sleep(2)
@@ -76,22 +70,22 @@ def main():
       ai_2_messages.append({'role': 'assistant', 'content': ai_2_message}) # Add AI 2 message to its own memory
       ai_1_messages.append({'role': 'user', 'content': ai_2_message}) # Add AI 2 message to AI 1's memory
 
-      print(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}): {ai_2_message}") # Outputs AI 2 Message to console
+      print_and_write(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}): {ai_2_message}", log_file) # Outputs AI 2 Message to console
 
-      print('\n---------------------------------------------------------------------------------------\n') # Divides each message for better readability
+      print_and_write('\n---------------------------------------------------------------------------------------\n', log_file) # Divides each message for better readability
       time.sleep(2)
       ai_1_message = get_message_from_ai1(ai_1_properties.age, ai_1_properties.gender, ai_1_messages)
 
       ai_2_messages.append({'role': 'user', 'content': ai_1_message}) # Add AI 1 message to AI 2's memory
       ai_1_messages.append({'role': 'assistant', 'content': ai_1_message}) # Add AI 1 message to its own memory
 
-      print(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}): {ai_1_message}\n") # Outputs AI 1 Message to console
+      print_and_write(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}): {ai_1_message}\n", log_file) # Outputs AI 1 Message to console
 
-    print('\n====================================================\n')
-    print(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.')
+    print_and_write('\n====================================================\n', log_file)
+    print_and_write(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.', log_file)
 
 
-def get_message_from_ai1(age, gender, messages):
+def get_message_from_ai1(messages):
   response = openai.chat.completions.create(
     model = 'gpt-3.5-turbo',
     messages=messages,
@@ -100,7 +94,7 @@ def get_message_from_ai1(age, gender, messages):
   
   return response.choices[0].message.content.strip()
 
-def get_message_from_ai2(age, gender, messages):
+def get_message_from_ai2(messages):
   response = openai.chat.completions.create(
     model = 'gpt-3.5-turbo',
     messages=messages,
@@ -140,23 +134,28 @@ def prompt_yes_no(prompt):
   return result.lower()
 
 # The purpose of this function is to print the info about the simulation to the console
-def print_simulation_info(celebrity_mode, ai_1, ai_2, prompt1, limit):
+def print_simulation_info(celebrity_mode, ai_1, ai_2, prompt1, limit, log_file):
   time.sleep(1)
-  print('Initializing AI...')
-  print('\n====================================================\n')
-  print('Initial prompt: ' + prompt1 +'\n')
+  print_and_write('Initializing AI...', log_file)
+  print_and_write('\n====================================================\n', log_file)
+  print_and_write(f'Initial prompt ({ai_2.name} -> {ai_1.name}): ' + prompt1 +'\n', log_file)
   if (celebrity_mode != 'y'):
     # Outputs the name and age of each bot
-    print(f'AI 1 Details:\n\tAge: {ai_1.age}\n\tGender: {ai_1.gender}\n\tName: {ai_1.name}')
-    print(f'AI 2 Details:\n\tAge: {ai_2.age}\n\tGender: {ai_2.gender}\n\tName: {ai_2.name}')
+    print_and_write(f'AI 1 Details:\n\tAge: {ai_1.age}\n\tGender: {ai_1.gender}\n\tName: {ai_1.name}', log_file)
+    print_and_write(f'AI 2 Details:\n\tAge: {ai_2.age}\n\tGender: {ai_2.gender}\n\tName: {ai_2.name}', log_file)
   else:
-    print(f'AI 1 Details:\n\tName: {ai_1.name}')
-    print(f'AI 2 Details:\n\tName: {ai_2.name}')
+    print_and_write(f'AI 1 Details:\n\tName: {ai_1.name}', log_file)
+    print_and_write(f'AI 2 Details:\n\tName: {ai_2.name}', log_file)
   
-  print('\nMessage Limit: ' + limit)
-  print('\n====================================================\n')
-  print('Initializing conversation...')
-  print('\n====================================================\n')
+  print_and_write('\nMessage Limit: ' + limit, log_file)
+  print_and_write('\n====================================================\n', log_file)
+  print_and_write('Initializing conversation...', log_file)
+  print_and_write('\n====================================================\n', log_file)
+
+# Prints and writes a string to a file at the same time
+def print_and_write(text, log_file):
+  print(text)
+  log_file.write(text)
 
 
 
