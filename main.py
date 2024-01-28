@@ -35,7 +35,10 @@ def main():
   print('ai1 ', ai_1_properties.name)
   print('ai2 ', ai_2_properties.name)
 
-  limit = input('Set the amount of messages you\'d like the bots to have: ')
+  limit = get_text('Set the amount of messages you\'d like the bots to have', 14)
+  while not limit.isdigit():
+    get_text('Set the amount of messages you\'d like the bots to have', 14)
+  
   # User enters an initial prompt to sort of guide the conversation
   prompt1 = input(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name}): ')
   
@@ -163,6 +166,7 @@ def get_text(prompt, font_size):
   result = text_input.get()
   clear_mainframe()
   return result
+
   
 
 def get_message_from_ai1(messages):
