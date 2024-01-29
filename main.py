@@ -52,7 +52,7 @@ def main():
   prompt1 = get_text(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name})', 13)
 
   
-  log_file = open(f'./logs/{ai_1_properties.name.replace(' ','_')}_and_{ai_2_properties.name.replace(' ','_')}_{time.time()}_conversation-log.txt', 'x')
+  log_file = open(f'./logs/{ai_1_properties.name.replace(" ","_")}_and_{ai_2_properties.name.replace(" ","_")}_{time.time()}_conversation-log.txt', 'x')
   clear_mainframe()
 
   root.title(f'{ai_1_properties.name} and {ai_2_properties.name} are having a conversation | AI Conversation by Lucas Amberg') # Changes the name of the title of the window
@@ -268,7 +268,7 @@ def brief_text_popup(main_text, sub_text, popup_time):
 def get_ai_properties(celebrity_mode, number):
   class AI_Information():
     def __init__(self, celebrity_mode) : # Sets age, gender, and name for the agent
-      self.age = random.randint(18,82) # Age can be between 18 and 82
+      self.age = str(random.randint(18,82)) # Age can be between 18 and 82
       self.gender = self.get_gender()
       self.name = self.get_name(celebrity_mode)
       self.number = number # Might be useful someday
@@ -382,7 +382,8 @@ if __name__ == '__main__':
   if API_KEY != None:
     main()
   else:
-    text=ttk.Label(mainframe, text='No API Key Was Found In Your ENV Variables', background='white', foreground='red', font=('Brass Mono', 12), justify='center')
+    brief_text_popup('No API Key was found in your environment variables', 'Please try again or input the key instead', 4000)
+    exit()
   root.mainloop()
 
 
