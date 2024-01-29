@@ -34,16 +34,19 @@ def main():
   # celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode [y/n]?: ')
   celebrity_mode = prompt_yes_no('Would you like to enter celebrity mode?', 17)
 
-  random_changes = prompt_yes_no('Would you like random changes to take place in the coversation?', 14)
-
-  # Sets the random age and gender of each AI bot
+  # Sets the random age and gender of each AI bot, or gathers the names if celebrity mode is enabled
   ai_1_properties = get_ai_properties(celebrity_mode, 1)
   ai_2_properties = get_ai_properties(celebrity_mode, 2)
 
+  # Asks the user whether they'd like random changes in the conversation which could make the convo run better
+  random_changes = prompt_yes_no('Would you like random changes to take place in the coversation?', 14)
 
+  # Allows the user to set a limit to the number of messages the bots will have saving time
   limit = get_text('Set the amount of messages you\'d like the bots to have', 14)
   while not limit.isdigit():
     limit = get_text('Set the amount of messages you\'d like the bots to have', 14)
+  
+  limit = str(int(limit) // 2) # 2 messages per loop
   
   # User enters an initial prompt to sort of guide the conversation
   prompt1 = get_text(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name})', 13)
@@ -177,7 +180,7 @@ def main():
   add_to_gui_and_log(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}:{i+1}): {ai_2_message}", log_file) # Outputs AI 2 Message to console
 
   add_to_gui_and_log('\n====================================================\n', log_file)
-  add_to_gui_and_log(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.', log_file) # Logs the time to run
+  add_to_gui_and_log(f'{(int(limit))*2 + 2} messages sent in {int(time.time() - start_time)} seconds.', log_file) # Logs the time to run
   root.title(f'{ai_1_properties.name} and {ai_2_properties.name} had a conversation | AI Conversation by Lucas Amberg') # Changes the name of the title of the window
   
 
