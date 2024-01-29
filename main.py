@@ -306,7 +306,7 @@ def print_simulation_info(celebrity_mode, ai_1, ai_2, prompt1, limit, log_file):
     add_to_gui_and_log(f'AI 2 Details:\n\tName: {ai_2.name}', log_file)
     add_to_gui_and_log(f'\nCelebrity Mode: Enabled', log_file)
   
-  add_to_gui_and_log('\nMessage Limit: ' + limit, log_file)
+  add_to_gui_and_log('\nMessage Limit: ' + limit*2, log_file)
   add_to_gui_and_log('\n====================================================\n', log_file)
   add_to_gui_and_log('Initializing conversation...', log_file)
   add_to_gui_and_log('\n====================================================\n', log_file)
