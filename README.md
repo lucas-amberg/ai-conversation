@@ -98,7 +98,7 @@ The random changes will not take place over and over again in succession without
 
 If you choose not to select random changes, there will be no influence, the agents themselves will guide the whole conversation.
 
-I hope I explained this good enough for it to make sense but if not I will fix this in the future. I just want you to know that even with this checked there is no guaruntee that the conversation will switch at all but there also isn't a guaruntee that will switch several times in a run. Hence it being random.
+I hope I explained this good enough for it to make sense but if not I will fix this in the future. I just want you to know that even with this checked there is no guaruntee that the conversation will switch at all but there also isn't a guaruntee that won't switch several times in a run. Hence it being random.
 
 ### 7. **Amount of Messages**
 
