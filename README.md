@@ -116,7 +116,9 @@ These two characters aren't just gonna blankly stare at each other right? They h
 
 ![Initial Prompt](./logs/preview-images/Initial-prompt.png)
 
-In the initial prompt, **Agent 2 will ALWAYS say something to Agent 1**, it is hard-coded as such. I will likely implement an option for this to be switched in the future, but currently this is how it is. For the record, when in celebrity mode, agent 2 is the second name you enter, and agent 1 is the first, so if you want someone in a conversation to have the first words: put their name in second. You can also probably do something with asterisks like *falls* or *bumps into you* or something but I haven't tried that, but since you can set the names to a type of animal and it will act like that animal rather than a person with the "Dog" I figure the AI is smart enough to deal with these types of creative situations.
+In the initial prompt, **Agent 2 will ALWAYS say something to Agent 1**, it is hard-coded as such. I will likely implement an option for this to be switched in the future, but currently this is how it is. For the record, when in celebrity mode, agent 2 is the second name you enter, and agent 1 is the first, so if you want someone in a conversation to have the first words: put their name in second. 
+
+You can also probably input something with asterisks like *falls*, *bumps into you*, etc but I haven't tried that. Since you can set the names to a type of animal and it will act like that animal rather than a person with the name "Dog" I figure the AI is smart enough to deal with many types of creative situations. Feel free to experiment as much as you like.
 
 ### 9. **Playing The Waiting Game**
 
