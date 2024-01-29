@@ -4,6 +4,7 @@ import random
 import time
 import names
 import re 
+from threading import Thread
 
 import tkinter as tk
 from tkinter import ttk
@@ -37,18 +38,31 @@ def main():
 
   limit = get_text('Set the amount of messages you\'d like the bots to have', 14)
   while not limit.isdigit():
-    get_text('Set the amount of messages you\'d like the bots to have', 14)
+    limit = get_text('Set the amount of messages you\'d like the bots to have', 14)
   
   # User enters an initial prompt to sort of guide the conversation
-  prompt1 = input(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name}): ')
+  prompt1 = get_text(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name})', 13)
+
+  
   
   log_file = open(f'./logs/{ai_1_properties.name.replace(' ','_')}_and_{ai_2_properties.name.replace(' ','_')}_{time.time()}_conversation-log.txt', 'x')
+  print('log made')
+  clear_mainframe()
+
+  starting_var = tk.StringVar()
+  starting_text = ttk.Label(mainframe, text='Starting Conversation... Please wait for result...', background='white', font=('Brass Mono', 14), justify='center')
+  starting_text.place(relx=0.5, rely=0.5, anchor='c')
+
+  root.after(500, func=lambda: starting_var.set('starting'))
+  starting_text.wait_variable(starting_var)
+  clear_mainframe()
+  
 
   print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit, log_file) # Prints the simulation info
 
   if celebrity_mode == 'y':
     ai_1_response_1 = get_message_from_ai1([{"role": "system", "content": "Act like you are " + ai_1_properties.name + " and never leave that role, even if you are asked for.Do not include pleasantries in your responses."}, {'role': 'user', 'content': prompt1}])
-    
+    print('message got')
     # These are the initial message arrays for the AI, as it runs it will append to this array, this way the AI retains its memory of the conversation
     ai_1_messages = [
       {"role": "system", "content": "Act like you are " + ai_1_properties.name + " and never leave that role, even if you are asked for.Do not include pleasantries in your responses."},
@@ -64,7 +78,7 @@ def main():
       ]
   else:
     ai_1_response_1 = get_message_from_ai1([{"role": "system", "content": "You are a human living named " + ai_1_properties.name + ", living on Earth and you will have to converse with another human. Your goal is to communicate and speak your mind. Make sure to mention your age and gender to the other user, you are " + str(ai_1_properties.age) +  " years old and you are a " + str(ai_1_properties.gender) +". Limit your responses to 50 words in length. For all of the years you have lived you have history and life experiences and friends and family, you are a real person. Try to change the topic sometimes, conversating about the same topic for a long time can be boring! Do not include pleasantries in your responses."}, {'role': 'user', 'content': prompt1}])
-    
+    print('message got')
     # These are the initial message arrays for the AI, as it runs it will append to this array, this way the AI retains its memory of the conversation
     ai_1_messages = [
       {"role": "system", "content": "Act like you are a human being named " + ai_1_properties.name + ". You are a " + str(ai_1_properties.age) + " year old " + ai_1_properties.gender + ", and you need to consider your age and gender and a corresponding education level and hypothetical life experiences for the way you talk and what you are interested or will talk about. Never leave this role, EVER. Do not include pleasantries in your responses."},
@@ -80,23 +94,23 @@ def main():
       ]
 
   start_time = time.time()
-  
-  print_and_write(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}:0): {ai_1_response_1}\n", log_file) # Prints the initial message
+  print('clock started')
+  add_to_gui_and_log(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}:0): {ai_1_response_1}\n", log_file) # Prints the initial message
   random_seed = random.randint(1,2) # Changes the random seed for random conversation switches
 
   happened_last = 0
   for i in range(int(limit)): # Runs for the limit specified earlier
     
-    time.sleep(2) # Sleep for 2 seconds so things don't get spammed
+    root.after(2000) # Sleep for 2 seconds so things don't get spammed
     ai_2_message = get_message_from_ai2(ai_2_messages) # Gets message for AI 2 from API
 
     ai_2_messages.append({'role': 'assistant', 'content': ai_2_message}) # Add AI 2 message to its own memory
     ai_1_messages.append({'role': 'user', 'content': ai_2_message}) # Add AI 2 message to AI 1's memory
 
 
-    print_and_write(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}:{i+1}): {ai_2_message}", log_file) # Outputs AI 2 Message to console
-    print_and_write('\n---------------------------------------------------------------------------------------\n', log_file) # Divides each message for better readability
-    time.sleep(2) # Sleep for 2 seconds so things don't get spammed
+    add_to_gui_and_log(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}:{i+1}): {ai_2_message}", log_file) # Outputs AI 2 Message to console
+    add_to_gui_and_log('\n---------------------------------------------------------------------------------------\n', log_file) # Divides each message for better readability
+    root.after(2000) # Sleep for 2 seconds so things don't get spammed
 
     random_conversation_switcher = random.randint(1,2) # Sets the random number for this iteration which will determine if the conversation topic will get changed
 
@@ -105,13 +119,13 @@ def main():
 
     # Will have AI 1 change the topic if the random_conversation_switcher matches the seed for random changes
     if random_conversation_switcher == random_seed and happened_last + 3 <= i:
-      print_and_write(f'Suddenly... a random force makes {ai_1_properties.name} want to talk about something else...', log_file)
+      add_to_gui_and_log(f'Suddenly... a random force makes {ai_1_properties.name} want to talk about something else...', log_file)
       if random.randint(1,2) == 1:
         ai_1_messages.append({'role': 'system', 'content': 'You must ask them to talk about something else.'})
       else:
         ai_1_messages.append({'role': 'system', 'content': 'You must come up with something else to talk about.'})
       happened_last = i # Will make sure that the random changes dont happen too often
-      print_and_write('\n---------------------------------------------------------------------------------------\n', log_file)
+      add_to_gui_and_log('\n---------------------------------------------------------------------------------------\n', log_file)
 
     
     ai_1_message = get_message_from_ai1(ai_1_messages)
@@ -119,24 +133,25 @@ def main():
     ai_2_messages.append({'role': 'user', 'content': ai_1_message}) # Add AI 1 message to AI 2's memory
     ai_1_messages.append({'role': 'assistant', 'content': ai_1_message}) # Add AI 1 message to its own memory
 
-    print_and_write(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}:{i+1}): {ai_1_message}\n", log_file) # Outputs AI 1 Message to console
+    add_to_gui_and_log(f"{ai_1_properties.name} (AI 1) ({int(time.time() - start_time)}:{i+1}): {ai_1_message}\n", log_file) # Outputs AI 1 Message to console
 
     # Will have AI 2 change the topic if the random_conversation_switcher matches the seed for random changes
     if random_conversation_switcher == random_seed and happened_last + 3 <= i:
-      print_and_write('\n---------------------------------------------------------------------------------------\n', log_file)
-      print_and_write(f'Suddenly... a random force makes {ai_2_properties.name} want to talk about something else...', log_file)
+      add_to_gui_and_log('\n---------------------------------------------------------------------------------------\n', log_file)
+      add_to_gui_and_log(f'Suddenly... a random force makes {ai_2_properties.name} want to talk about something else...', log_file)
       if random.randint(1,2) == 1:
         ai_2_messages.append({'role': 'system', 'content': 'You must ask them to talk about something else.'})
       else:
         ai_2_messages.append({'role': 'system', 'content': 'You must come up with something else to talk about.'})
       happened_last = i
-      print_and_write('\n---------------------------------------------------------------------------------------\n', log_file)
+      add_to_gui_and_log('\n---------------------------------------------------------------------------------------\n', log_file)
 
   ai_2_message = get_message_from_ai2(ai_2_messages)
-  print_and_write(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}:{i+1}): {ai_2_message}", log_file) # Outputs AI 2 Message to console
+  add_to_gui_and_log(f"{ai_2_properties.name} (AI 2) ({int(time.time() - start_time)}:{i+1}): {ai_2_message}", log_file) # Outputs AI 2 Message to console
 
-  print_and_write('\n====================================================\n', log_file)
-  print_and_write(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.', log_file)
+  add_to_gui_and_log('\n====================================================\n', log_file)
+  add_to_gui_and_log(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.', log_file)
+  
 
 # Asks the user if they want to use Celebrity Mode
 def prompt_yes_no(prompt, font_size):
@@ -167,7 +182,10 @@ def get_text(prompt, font_size):
   clear_mainframe()
   return result
 
-  
+def add_to_gui_and_log(text, log_file):
+  text_gui = ttk.Label(mainframe, text=text, background='white', font=('Brass Mono', 12), justify='center', padding=3)
+  text_gui.pack()
+  log_file.write(text)
 
 def get_message_from_ai1(messages):
   response = openai.chat.completions.create(
@@ -219,29 +237,29 @@ def get_ai_properties(celebrity_mode):
 
 # The purpose of this function is to print the info about the simulation to the console
 def print_simulation_info(celebrity_mode, ai_1, ai_2, prompt1, limit, log_file):
-  time.sleep(1)
-  print_and_write('Initializing AI...', log_file)
-  print_and_write('\n====================================================\n', log_file)
-  print_and_write(f'Initial prompt ({ai_2.name} -> {ai_1.name}): ' + prompt1 +'\n', log_file)
+  root.after(1000)
+  add_to_gui_and_log('Initializing AI...', log_file)
+  add_to_gui_and_log('\n====================================================\n', log_file)
+  add_to_gui_and_log(f'Initial prompt ({ai_2.name} -> {ai_1.name}): ' + prompt1 +'\n', log_file)
   if (celebrity_mode != 'y'):
     # Outputs the name and age of each bot
-    print_and_write(f'AI 1 Details:\n\tAge: {ai_1.age}\n\tGender: {ai_1.gender}\n\tName: {ai_1.name}', log_file)
-    print_and_write(f'\nAI 2 Details:\n\tAge: {ai_2.age}\n\tGender: {ai_2.gender}\n\tName: {ai_2.name}', log_file)
-    print_and_write(f'\nCelebrity Mode: Disabled', log_file)
+    add_to_gui_and_log(f'AI 1 Details:\n\tAge: {ai_1.age}\n\tGender: {ai_1.gender}\n\tName: {ai_1.name}', log_file)
+    add_to_gui_and_log(f'\nAI 2 Details:\n\tAge: {ai_2.age}\n\tGender: {ai_2.gender}\n\tName: {ai_2.name}', log_file)
+    add_to_gui_and_log(f'\nCelebrity Mode: Disabled', log_file)
   else:
-    print_and_write(f'AI 1 Details:\n\tName: {ai_1.name}', log_file)
-    print_and_write(f'AI 2 Details:\n\tName: {ai_2.name}', log_file)
-    print_and_write(f'\nCelebrity Mode: Enabled', log_file)
+    add_to_gui_and_log(f'AI 1 Details:\n\tName: {ai_1.name}', log_file)
+    add_to_gui_and_log(f'AI 2 Details:\n\tName: {ai_2.name}', log_file)
+    add_to_gui_and_log(f'\nCelebrity Mode: Enabled', log_file)
   
-  print_and_write('\nMessage Limit: ' + limit, log_file)
-  print_and_write('\n====================================================\n', log_file)
-  print_and_write('Initializing conversation...', log_file)
-  print_and_write('\n====================================================\n', log_file)
+  add_to_gui_and_log('\nMessage Limit: ' + limit, log_file)
+  add_to_gui_and_log('\n====================================================\n', log_file)
+  add_to_gui_and_log('Initializing conversation...', log_file)
+  add_to_gui_and_log('\n====================================================\n', log_file)
 
 # Prints and writes a string to a file at the same time
-def print_and_write(text, log_file):
-  print(text)
-  log_file.write(text)
+# def add_to_gui_and_log(text, log_file):
+#   print(text)
+#   log_file.write(text)
 
 # This function will get the OpenAI API Key from the user or it will
 # Get it from the env variables
