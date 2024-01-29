@@ -4,7 +4,6 @@ import random
 import time
 import names
 import re 
-from threading import Thread
 
 import tkinter as tk
 from tkinter import ttk
@@ -12,7 +11,8 @@ from tkinter import ttk
 root = tk.Tk() # Initialize tkinter window
 root.geometry('600x400')
 root.attributes('-topmost',1)
-root.title('AI Conversation')
+root.title('AI Conversation by Lucas Amberg')
+root.resizable(False, False)
 mainframe = tk.Frame(root, background='white')
 mainframe.pack(fill='both', expand=True)
 
@@ -44,18 +44,30 @@ def main():
   prompt1 = get_text(f'Enter an initial prompt to get the conversation going ({ai_2_properties.name} -> {ai_1_properties.name})', 13)
 
   
-  
   log_file = open(f'./logs/{ai_1_properties.name.replace(' ','_')}_and_{ai_2_properties.name.replace(' ','_')}_{time.time()}_conversation-log.txt', 'x')
   print('log made')
   clear_mainframe()
 
-  starting_var = tk.StringVar()
-  starting_text = ttk.Label(mainframe, text='Starting Conversation... Please wait for result...', background='white', font=('Brass Mono', 14), justify='center')
-  starting_text.place(relx=0.5, rely=0.5, anchor='c')
+  root.title(f'{ai_1_properties.name} and {ai_2_properties.name} are having a conversation | AI Conversation by Lucas Amberg')
 
-  root.after(500, func=lambda: starting_var.set('starting'))
-  starting_text.wait_variable(starting_var)
-  clear_mainframe()
+  brief_text_popup('Starting Conversation... Please wait for result...', f'{ai_1_properties.name} and {ai_2_properties.name} are currently having a conversation. This may take a moment.', 500)
+
+  global canvas
+  canvas = tk.Canvas(mainframe, width=560, height=400)
+  canvas.pack(fill='both', side='left', expand=1)
+
+  scrollbar = ttk.Scrollbar(mainframe, orient='vertical', command=canvas.yview)
+  scrollbar.pack(side='right', fill='y')
+
+  canvas.config(yscrollcommand=scrollbar.set)
+  canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all')))
+
+  global secondframe
+  secondframe = tk.Frame(canvas)
+
+  canvas.create_window((0,0), window=secondframe, anchor='nw')
+
+
   
 
   print_simulation_info(celebrity_mode, ai_1_properties, ai_2_properties, prompt1, limit, log_file) # Prints the simulation info
@@ -151,11 +163,12 @@ def main():
 
   add_to_gui_and_log('\n====================================================\n', log_file)
   add_to_gui_and_log(f'{int(limit) + 1} messages sent in {int(time.time() - start_time)} seconds.', log_file)
+  root.title(f'{ai_1_properties.name} and {ai_2_properties.name} had a conversation | AI Conversation by Lucas Amberg')
   
 
 # Asks the user if they want to use Celebrity Mode
 def prompt_yes_no(prompt, font_size):
-  text = ttk.Label(mainframe, text=prompt, background='white', font=('Brass Mono', font_size), justify='center')
+  text = ttk.Label(mainframe, text=prompt, wraplength=550, background='white', font=('Brass Mono', font_size), justify='center')
   text.place(relx=.5, rely=.4, anchor="c")
   answer = tk.StringVar(value='y')
   answer_button_clicked = tk.StringVar()
@@ -170,7 +183,7 @@ def prompt_yes_no(prompt, font_size):
   return answer.get()
 
 def get_text(prompt, font_size):
-  text = ttk.Label(mainframe, text=prompt, background='white', font=('Brass Mono', font_size), justify='center')
+  text = ttk.Label(mainframe, text=prompt, wraplength=550, background='white', font=('Brass Mono', font_size), justify='center')
   text.place(relx=.5, rely=.4, anchor="c")
   answer_button_clicked = tk.StringVar()
   text_input = ttk.Entry(mainframe, width=70)
@@ -183,7 +196,7 @@ def get_text(prompt, font_size):
   return result
 
 def add_to_gui_and_log(text, log_file):
-  text_gui = ttk.Label(mainframe, text=text, background='white', font=('Brass Mono', 12), justify='center', padding=3)
+  text_gui = ttk.Label(secondframe, text=text, background='white', font=('Brass Mono', 12), justify='left', padding=4, width=600, wraplength=560)
   text_gui.pack()
   log_file.write(text)
 
@@ -204,6 +217,17 @@ def get_message_from_ai2(messages):
     )
   
   return response.choices[0].message.content.strip()
+
+def brief_text_popup(main_text, sub_text, popup_time):
+  starting_var = tk.StringVar()
+  starting_text = ttk.Label(mainframe, wraplength=550, text=main_text, background='white', font=('Brass Mono', 14), justify='center')
+  starting_subtext = ttk.Label(mainframe, wraplength=550, text=sub_text, background='white', font=('Brass Mono', 10), justify='center')
+  starting_text.place(relx=0.5, rely=0.4, anchor='c')
+  starting_subtext.place(relx=0.5, rely=0.6, anchor='c')
+
+  root.after(popup_time, func=lambda: starting_var.set('starting'))
+  starting_text.wait_variable(starting_var)
+  clear_mainframe()
 
 def get_ai_properties(celebrity_mode):
   class AI_Information():
@@ -313,6 +337,8 @@ def clear_mainframe():
     widget.destroy() # Clears the frame
 
 if __name__ == '__main__':
+  brief_text_popup('Welcome to AI Conversation', 'By Lucas Amberg', 2000)
+  brief_text_popup('Using OpenAI API', '(A Conversation Will Cost Typically $0.01-$0.10)', 2000)
   get_openai_key()
   if API_KEY != None:
     main()
