@@ -21,24 +21,6 @@ AI Chatbot made using OpenAI API and Python to simulate a real interaction betwe
 * Add more than 2 AI agents
 * Add documentation
 
-
-## Examples
-### Celebrity Mode:
-***Eminem AI and Tupac AI having a conversation:***
-![Tupac and Eminem having a conversation](./logs/preview-images/eminem-tupac-example.png)\
-\
-\
-***Spongebob AI and Patrick AI having a conversation:***
-![Spongebob and Patrick having a conversation](./logs/preview-images/spongebob-patrick-example.png)
-
-
-
-### Non Celebrity Mode:
-***Benjamin, 23, talks to Dorothy, 37***
-![Benjamin and Dorothy having a conversation](./logs/preview-images/random-character-example.png)
-
-*More examples can be found in the `/logs/` folder*
-
 ## Documentation and How to Use:
 
 0.5. **Install Git and Python, and retreive your OpenAI API Key**
@@ -171,4 +153,21 @@ This makes it super easy to share your funny or interesting conversations with y
 ![Discord Message](./logs/preview-images/discord-example.png)
 
 And that's that! Thank you for reading my documentation for this application! I hope you have fun using it! If you have any questions, don't hesitate to reach out and ask me about anything, and if you want to collaborate and add features please go for it!
+
+## More Examples
+### Celebrity Mode:
+***Eminem AI and Tupac AI having a conversation:***
+![Tupac and Eminem having a conversation](./logs/preview-images/eminem-tupac-example.png)\
+\
+\
+***Spongebob AI and Patrick AI having a conversation:***
+![Spongebob and Patrick having a conversation](./logs/preview-images/spongebob-patrick-example.png)
+
+
+
+### Non Celebrity Mode:
+***Benjamin, 23, talks to Dorothy, 37***
+![Benjamin and Dorothy having a conversation](./logs/preview-images/random-character-example.png)
+
+*More examples can be found in the `/logs/example-logs/` folder*
 
