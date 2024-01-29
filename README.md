@@ -8,7 +8,8 @@ AI Chatbot made using OpenAI API and Python to simulate a real interaction betwe
 * Make AI agents into historical figures or celebrities so their conversation can be simulated (#2)
 * Conversations are saved in a txt file in the `/logs/` directory
 * Add ability for User to input their own API key to use the application (#4)
-* Add a GUI
+* GUI using Tkinter
+=======
 
 ## Future Features
 * Set the name and age of AI agents at will
