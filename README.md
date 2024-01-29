@@ -14,7 +14,6 @@ AI Chatbot made using OpenAI API and Python to simulate a real interaction betwe
 * Conversations are saved in a txt file in the `/logs/` directory
 * Add ability for User to input their own API key to use the application (#4)
 * GUI using Tkinter
-=======
 
 ## Future Features
 * Set the name and age of AI agents at will
